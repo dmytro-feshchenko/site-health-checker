@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	models "site-checker/server/models"
+	models "site-checker/models"
 )
 
 // CreateMonitor - create new monitor for the user

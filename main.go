@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"site-checker/db"
 	"site-checker/server"
-	"site-checker/server/db"
 
 	"github.com/jinzhu/gorm"
 )
