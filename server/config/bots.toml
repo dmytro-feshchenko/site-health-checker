@@ -1,0 +1,11 @@
+[skype]
+authenticationURL = "https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token"
+defaultGrantType = "client_credentials"
+defaultScope = "https://api.botframework.com/.default"
+
+[slack]
+sendMessageURL = "https://slack.com/api/chat.postMessage"
+
+[hipchat]
+authorizationURL = "https://www.hipchat.com/users/authorize"
+tokenURL = "https://api.hipchat.com/v2/oauth/token"
