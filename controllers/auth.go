@@ -1,8 +1,15 @@
+// Package controllers - contains all the controllers
+// @SubApi User [/auth]
+// @SubApi Allows you access to different features of the users , login , registration, etc [/auth]
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
+	"site-checker/db"
+	"site-checker/models"
+	"site-checker/utils"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -10,6 +17,15 @@ import (
 )
 
 // Login - get auth token with username and password
+// @Title Login User
+// @Description Login User and retrieve a token for the authentication
+// @Accept json
+// @Param userId path int true &quot;User ID&quot;
+// @Success 200 {object} string &quot;Success&quot;
+// @Failure 401 {object} string &quot;Access denied&quot;
+// @Failure 404 {object} string &quot;Not Found&quot;
+// @Resource /auth
+// @Router /v1/auth/:userId.json [get]
 func Login(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
@@ -38,4 +54,27 @@ func Login(c echo.Context) error {
 	}
 
 	return echo.ErrUnauthorized
+}
+
+// Registration - create new user
+func Registration(c echo.Context) error {
+	u := new(models.User)
+	if err := c.Bind(u); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	// encrypt password
+	password, err := utils.EncryptPassword(os.Getenv("SALT"), c.FormValue("password"))
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	u.Password = password
+
+	fmt.Println(password)
+
+	if res := db.DBCon.Create(u); res.Error != nil {
+		return c.JSON(http.StatusBadRequest, res.Error)
+	}
+	return c.JSON(http.StatusCreated, u)
 }

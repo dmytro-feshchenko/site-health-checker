@@ -1,3 +1,10 @@
+// @APIVersion 1.0.0
+// @APITitle Uptime Guard
+// @APIDescription Simple utility for checking websites with time scheduling
+// @Contact feschenko.dmitryi@gmail.com
+// @TermsOfServiceUrl https://www.upguard.com/terms-of-use
+// @License MIT
+// @LicenseUrl http://opensource.org/licenses/MIT
 package main
 
 import (
